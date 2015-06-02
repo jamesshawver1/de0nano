@@ -1,0 +1,13 @@
+
+
+# These are the pin assignments for the Altera DE0 Nano
+set_location_assignment PIN_R8  -to CLK50MHZ
+set_location_assignment PIN_J15 -to N_RESET
+set_location_assignment PIN_A15 -to LED[0]
+set_location_assignment PIN_A13 -to LED[1]
+set_location_assignment PIN_B13 -to LED[2]
+set_location_assignment PIN_A11 -to LED[3]
+set_location_assignment PIN_D1  -to LED[4]
+set_location_assignment PIN_F3  -to LED[5]
+set_location_assignment PIN_B1  -to LED[6]
+set_location_assignment PIN_L3  -to LED[7]
