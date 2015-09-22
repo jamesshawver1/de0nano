@@ -1,4 +1,4 @@
-SRCS=../rtl/top_level.v
+SRCS=../rtl/top_level.sv
 current_dir=$(shell basename $(CURDIR))
 export
 syn:
