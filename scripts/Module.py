@@ -66,9 +66,11 @@ class Module:
       s = []
       for i in self.signals.split("\n"):
         b = Signal(i)
-        if(len(str(b))>1):
-          if(b.name.strip() != ""):
+        try:
+          if(b.name.replace(" ","").strip() != ""):
             s.append(b)
+        except:
+            pass
       self.signals = s
     def __str__(self):
         return self.getInstance()
@@ -113,8 +115,9 @@ class Module:
     def getIntermediateNets(self):
       string = ""
       for i in self.signals:
-        string = string + "\n" +"wire "+i.packed_size+" "+i.net_name+" "+i.unpacked_size+"; "
-      self.intermediate_nets = string
+        if(i.net_name != ""):
+            string = string + "\n" +"wire "+i.packed_size+" "+i.net_name+" "+i.unpacked_size+"; "
+      self.intermediate_nets ="//"+self.name+" output signals"+ string.replace(" ;",";") + "\n\n"
       return self.intermediate_nets
     def getModuleFile(self,f,instances=[],nets=""):
       module_contents = ""
