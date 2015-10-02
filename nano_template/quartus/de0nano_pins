@@ -62,3 +62,99 @@ set_location_assignment PIN_B10 -to ADC_SADDR
 set_location_assignment PIN_A9  -to ADC_SDAT
 set_location_assignment PIN_B14 -to ADC_SCLK
 
+set_location_assignment PIN_A8  -to JP1_1
+set_location_assignment PIN_D3  -to JP1_2
+set_location_assignment PIN_B8  -to JP1_3
+set_location_assignment PIN_C3  -to JP1_4
+set_location_assignment PIN_A2  -to JP1_5
+set_location_assignment PIN_A3  -to JP1_6
+set_location_assignment PIN_B3  -to JP1_7
+set_location_assignment PIN_B4  -to JP1_8
+set_location_assignment PIN_A4  -to JP1_9
+set_location_assignment PIN_B5  -to JP1_10
+
+set_location_assignment PIN_A5  -to JP1_13
+set_location_assignment PIN_D5  -to JP1_14
+set_location_assignment PIN_B6  -to JP1_15
+set_location_assignment PIN_A6  -to JP1_16
+set_location_assignment PIN_B7  -to JP1_17
+set_location_assignment PIN_D6  -to JP1_18
+set_location_assignment PIN_A7  -to JP1_19
+set_location_assignment PIN_C6  -to JP1_20
+set_location_assignment PIN_C8  -to JP1_21
+set_location_assignment PIN_E6  -to JP1_22
+set_location_assignment PIN_E7  -to JP1_23
+set_location_assignment PIN_D8  -to JP1_24
+set_location_assignment PIN_E8  -to JP1_25
+set_location_assignment PIN_F8  -to JP1_26
+set_location_assignment PIN_F9  -to JP1_27
+set_location_assignment PIN_E9  -to JP1_28
+
+set_location_assignment PIN_C9  -to JP1_31
+set_location_assignment PIN_D9  -to JP1_32
+set_location_assignment PIN_E11  -to JP1_33
+set_location_assignment PIN_E10  -to JP1_34
+set_location_assignment PIN_C11  -to JP1_35
+set_location_assignment PIN_B11  -to JP1_36
+set_location_assignment PIN_A12  -to JP1_37
+set_location_assignment PIN_D11  -to JP1_38
+set_location_assignment PIN_D12  -to JP1_39
+set_location_assignment PIN_B12  -to JP1_40
+
+
+set_location_assignment PIN_T9  -to JP2_1
+set_location_assignment PIN_F13 -to JP2_2
+set_location_assignment PIN_R9  -to JP2_3
+set_location_assignment PIN_T15 -to JP2_4
+set_location_assignment PIN_T14 -to JP2_5
+set_location_assignment PIN_T13 -to JP2_6
+set_location_assignment PIN_R13 -to JP2_7
+set_location_assignment PIN_T12 -to JP2_8
+set_location_assignment PIN_R12 -to JP2_9
+set_location_assignment PIN_T11 -to JP2_10
+
+set_location_assignment PIN_T10 -to JP2_13
+set_location_assignment PIN_R11 -to JP2_14
+set_location_assignment PIN_P11 -to JP2_15
+set_location_assignment PIN_R10 -to JP2_16
+set_location_assignment PIN_N12 -to JP2_17
+set_location_assignment PIN_P9  -to JP2_18
+set_location_assignment PIN_N9  -to JP2_19
+set_location_assignment PIN_N11 -to JP2_20
+set_location_assignment PIN_L16 -to JP2_21
+set_location_assignment PIN_K16 -to JP2_22
+set_location_assignment PIN_R16 -to JP2_23
+set_location_assignment PIN_L15 -to JP2_24
+set_location_assignment PIN_P15 -to JP2_25
+set_location_assignment PIN_P16 -to JP2_26
+set_location_assignment PIN_R14 -to JP2_27
+set_location_assignment PIN_N16 -to JP2_28
+
+set_location_assignment PIN_N15 -to JP2_31
+set_location_assignment PIN_P14 -to JP2_32
+set_location_assignment PIN_L14  -to JP2_33
+set_location_assignment PIN_N14  -to JP2_34
+set_location_assignment PIN_M10  -to JP2_35
+set_location_assignment PIN_L13  -to JP2_36
+set_location_assignment PIN_J16  -to JP2_37
+set_location_assignment PIN_K15  -to JP2_38
+set_location_assignment PIN_J13  -to JP2_39
+set_location_assignment PIN_J14  -to JP2_40
+
+
+set_location_assignment PIN_E15 -to JP3_2
+set_location_assignment PIN_E16 -to JP3_3
+set_location_assignment PIN_M16 -to JP3_4
+set_location_assignment PIN_A14 -to JP3_5
+set_location_assignment PIN_B16 -to JP3_6
+set_location_assignment PIN_C14 -to JP3_7
+set_location_assignment PIN_C16 -to JP3_8
+set_location_assignment PIN_C15 -to JP3_9
+set_location_assignment PIN_D16 -to JP3_10
+set_location_assignment PIN_D15 -to JP3_11
+set_location_assignment PIN_D14 -to JP3_12
+set_location_assignment PIN_F15 -to JP3_13
+set_location_assignment PIN_F16 -to JP3_14
+set_location_assignment PIN_F14 -to JP3_15
+set_location_assignment PIN_G16 -to JP3_16
+set_location_assignment PIN_G15 -to JP3_17
