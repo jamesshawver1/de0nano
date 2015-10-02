@@ -25,7 +25,7 @@ module top_level
     output        G_SENSOR_CS,
 
     /*        ADC SIGNALS        */
-    output        ADC_CS_N,
+    output        ADC_CS_N, //LOW ACTIVE!
     output        ADC_SADDR,
     input         ADC_SDAT,
     output        ADC_SCLK,
@@ -128,7 +128,7 @@ module top_level
     output        JP3_11,
     output        JP3_12,
     output        JP3_13,
-    output        JP3_14,
+
     output        JP3_15,
     output        JP3_16,
     output        JP3_17,

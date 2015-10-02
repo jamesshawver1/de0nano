@@ -154,7 +154,7 @@ set_location_assignment PIN_D16 -to JP3_10
 set_location_assignment PIN_D15 -to JP3_11
 set_location_assignment PIN_D14 -to JP3_12
 set_location_assignment PIN_F15 -to JP3_13
-set_location_assignment PIN_F16 -to JP3_14
+
 set_location_assignment PIN_F14 -to JP3_15
 set_location_assignment PIN_G16 -to JP3_16
 set_location_assignment PIN_G15 -to JP3_17
