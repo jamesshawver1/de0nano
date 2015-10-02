@@ -1,6 +1,6 @@
 // synthesis VERILOG_INPUT_VERSION SYSTEMVERILOG_2005
 `define CLK_SPEED 50000000
-typedef logic l;
+
 module top_level 
 (
     input         CLK50MHZ,//do not rename
@@ -138,6 +138,7 @@ module top_level
 
 reg [31:0] counter_r;
 reg [31:0] counter1_r;
+wire reset;
 assign reset = ~KEY[0];
 
 always @(posedge CLK50MHZ) begin
