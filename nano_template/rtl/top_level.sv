@@ -105,12 +105,12 @@ dram_if dram(
     .clk(CLK50MHZ)
 );
 
-clk_div #(
-                    .DIV(`CLK_SPEED),
+dynamic_clk_div #(
                     .COUNTER_WIDTH(32)
         )
 aHz_inst (
     .clk(CLK50MHZ),
+    .div(`CLK_SPEED>>SWITCH),
     .reset(reset_s),
     .enable_o(aHz_s)
 );

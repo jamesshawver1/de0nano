@@ -4,8 +4,10 @@ set_global_assignment -name VERILOG_INPUT_VERSION SYSTEMVERILOG_2005
 set_global_assignment -name VERILOG_SHOW_LMF_MAPPING_MESSAGES OFF
 
 set_location_assignment PIN_R8  -to CLK50MHZ
+
 set_location_assignment PIN_J15 -to KEY[0]
 set_location_assignment PIN_E1  -to KEY[1]
+
 set_location_assignment PIN_A15 -to LED[0]
 set_location_assignment PIN_A13 -to LED[1]
 set_location_assignment PIN_B13 -to LED[2]
@@ -14,6 +16,12 @@ set_location_assignment PIN_D1  -to LED[4]
 set_location_assignment PIN_F3  -to LED[5]
 set_location_assignment PIN_B1  -to LED[6]
 set_location_assignment PIN_L3  -to LED[7]
+
+set_location_assignment PIN_M1  -to SWITCH[0]
+set_location_assignment PIN_T8  -to SWITCH[1]
+set_location_assignment PIN_B9  -to SWITCH[2]
+set_location_assignment PIN_M15 -to SWITCH[3]
+
 set_location_assignment PIN_L4  -to DRAM_ADDR[12]
 set_location_assignment PIN_G2  -to DRAM_DQ[0]
 set_location_assignment PIN_G1  -to DRAM_DQ[1]
