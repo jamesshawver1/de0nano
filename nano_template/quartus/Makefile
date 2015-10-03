@@ -4,6 +4,7 @@
 # Specify the name of the design (project) and the Quartus II
 # Settings File (.qsf)
 ###################################################################
+SRCS=$(shell find ../rtl | grep .sv && find ../rtl | grep .v)
 
 #PROJECT = Nano_Example
 PROJECT = $(current_dir)
@@ -44,11 +45,11 @@ smart: smart.log
 # Executable Configuration
 ###################################################################
 
-MAP_ARGS = --read_settings_files=on $(addprefix --source=,$(SRCS))
+MAP_ARGS = --64bit --read_settings_files=on $(addprefix --source=,$(SRCS))
 
-FIT_ARGS = --part=$(PART) --read_settings_files=on
-ASM_ARGS =
-STA_ARGS = -t timing.tcl
+FIT_ARGS = --64bit --part=$(PART) --read_settings_files=on
+ASM_ARGS = --64bit 
+STA_ARGS = --64bit -t timing.tcl
 
 ###################################################################
 # Target implementations

@@ -1,7 +1,6 @@
-SRCS=../rtl/top_level.sv
 current_dir=$(shell basename $(CURDIR))
 export
-syn:
+syn: clean
 	$(MAKE) -C quartus
 flash:
 	$(MAKE) program -C quartus

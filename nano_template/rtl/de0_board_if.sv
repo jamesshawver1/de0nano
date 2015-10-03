@@ -16,6 +16,6 @@ interface dram_if(
     logic wr_en_o;
     logic [14:0] addr_o;
 
-    modport master (output [15:0] data_o, input [15:0] data_i, output wr_en_o, output [14:0] addr_o);
+    modport master (output data_o, input data_i, output wr_en_o, output addr_o);
 
 endinterface
