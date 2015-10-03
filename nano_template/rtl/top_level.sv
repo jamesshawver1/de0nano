@@ -11,24 +11,16 @@ module top_level
     output [15:0] DRAM_DATA,
     output [1:0]  DRAM_BANK_ADDR,
     output [1:0]  DRAM_DQM, //data byte mask
-    output        DRAM_RAS_N,
-    output        DRAM_CAS_N,
-    output        DRAM_CLK_EN,
-    output        DRAM_CLK,
-    output        DRAM_WR_EN,
-    output        DRAM_CS_N,
+    output        DRAM_RAS_N, output        DRAM_CAS_N, output        DRAM_CLK_EN,
+    output        DRAM_CLK, output        DRAM_WR_EN, output        DRAM_CS_N,
 
     /* EEPROM/GSENSOR SIGNALS    */
-    output        EEPROM_SCLK,
-    input         EEPROM_SDAT,
-    input         G_SENSOR_INT,
+    output        EEPROM_SCLK, input         EEPROM_SDAT, input         G_SENSOR_INT,
     output        G_SENSOR_CS,
 
     /*        ADC SIGNALS        */
     output        ADC_CS_N, //LOW ACTIVE!
-    output        ADC_SADDR,
-    input         ADC_SDAT,
-    output        ADC_SCLK,
+    output        ADC_SADDR, input         ADC_SDAT, output        ADC_SCLK,
 
     /*       GPIO Signals by pin Position  */
     input         JP1_1, //must be input
@@ -87,6 +79,7 @@ module top_level
     output reg [7:0]  LED
 );
 
+reg [7:0]  LED_s;
 wire reset_s;
 wire aHz_s;
 assign reset = ~KEY[0];
@@ -115,9 +108,41 @@ aHz_inst (
     .enable_o(aHz_s)
 );
 
+genvar c;
+generate
+    for (c = 0; c < 8; c = c + 1) begin : gen
+        if( c<3 )
+            pwm #(
+                .DIV_WIDTH(16), 
+                .PWM_BITS(8)
+                )
+            pwm_inst (
+                .clk(CLK50MHZ),
+                .reset(reset),
+                .enable(LED_s[c]),
+                .div(100),
+                .compare(25),
+                .pwm_o(LED[c])
+            );
+        else
+            pwm #(
+                .DIV_WIDTH(16), 
+                .PWM_BITS(8)
+                )
+            pwm_inst (
+                .clk(CLK50MHZ),
+                .reset(reset),
+                .enable(LED_s[c]),
+                .div(100),
+                .compare('1),
+                .pwm_o(LED[c])
+            );
+    end
+endgenerate
+
 always_ff @(posedge CLK50MHZ)  begin
-    if (reset) LED <= '0;
-    else if (aHz_s) LED <= LED + 1;
+    if (reset) LED_s <= '0;
+    else if (aHz_s) LED_s <= LED_s + 1;
 end
 
 endmodule

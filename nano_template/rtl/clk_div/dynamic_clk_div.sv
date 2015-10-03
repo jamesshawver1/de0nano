@@ -17,8 +17,7 @@ always @(posedge clk) begin
 		if(counter_r > div) begin
 			counter_r <= 0;
 		end
-		else
-			counter_r <= counter_r +1;
+		else counter_r <= counter_r +1;
 	end
 end
 
