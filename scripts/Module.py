@@ -107,10 +107,10 @@ class Module:
               i.net_name=j.net_name
         elif(i.direction.strip() == "output"):
           wire_name = self.name+"_"+i.name.strip()
-          if(wire_name[-2:-1]=="_"):
-            wire_name = wire_name[0:-2]+"_s"
-          else:
-            wire_name = wire_name+"_s"
+          #if(wire_name[-2:-1]=="_"):
+          #  wire_name = wire_name[0:-2]+"_s"
+          #else:
+          wire_name = wire_name+"_s"
           i.net_name=wire_name
     def getIntermediateNets(self):
       string = ""

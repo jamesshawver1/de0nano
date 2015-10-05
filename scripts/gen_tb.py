@@ -53,14 +53,14 @@ def generateStim(module):
   for i in signals:
     if (i.direction=="output"):
       i.direction="input"
-      if(i.name[-2:-1]=="_"):
-        i.name=i.name[0:-2]
+      #if(i.name[-2:-1]=="_"):
+      #  i.name=i.name[0:-2]
       i.name=i.name+"_i"
       to_keep.append(i)
     elif (i.direction=="input"):
       i.direction="output"
-      if(i.name[-2:-1]=="_"):
-        i.name=i.name[0:-2]
+      #if(i.name[-2:-1]=="_"):
+      #  i.name=i.name[0:-2]
       i.name=i.name+"_o"
       to_keep.append(i)
     else: #interface
@@ -82,8 +82,8 @@ def generateScoreBoard(module,s):
   for i in module.signals:
     i.name = module.name+"_"+i.name
     if (i.direction == "output"):
-      if(i.name[-2:-1] == "_"):
-        i.name = i.name[0:-2]
+      #if(i.name[-2:-1] == "_"):
+      #  i.name = i.name[0:-2]
       i.direction ="input"
       i.name = i.name+"_i"
       expected_signals.append(i)
@@ -92,8 +92,8 @@ def generateScoreBoard(module,s):
   for i in s.signals:
     i.name = s.name+"_"+i.name
     if (i.direction == "output"):
-      if(i.name[-2:-1] == "_"):
-        i.name = i.name[0:-2]
+      #if(i.name[-2:-1] == "_"):
+      #  i.name = i.name[0:-2]
       i.direction="input"
       i.name = i.name+"_i"
       expected_signals.append(i)
@@ -150,7 +150,7 @@ def generateTestEnvironment(files):
   expect_file= "../tb/"+module.name+"/"+expected.name+".sv"
   expected.writeModuleFile(expect_file)
 
-  f = open("tests/"+module.name+".f","w")
+  f = open(module.name+".f","w")
   f.write(top_file+"\n")
   f.write(test_bench_file+"\n")
   f.write(stimulus_file+"\n")
