@@ -1,9 +1,7 @@
-//-----------------------------------------------------
-// Design Name : uart 
-// File Name   : uart.v
-// Function    : Simple UART
-// Coder       : Deepak Kumar Tala
-//-----------------------------------------------------
+`timescale 10ns / 10ps
+
+
+
 `ifndef uart_pkg
 `define uart_pkg
 
@@ -154,9 +152,9 @@ interface rx_uart_if #(SAMPLE_WIDTH=32)
                     if(sample_point) begin
                         if(~(|bit_count)) begin
                             bit_count <= '0;
-                            data<=8'haa;
                         end
                         else begin
+                            if(bit_count==1) data<=data_r;
                             bit_count <= bit_count -1;
                         end
                     end

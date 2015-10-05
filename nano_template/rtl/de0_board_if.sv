@@ -1,3 +1,6 @@
+`timescale 10ns / 10ps
+
+
 interface dram_if(
     output [12:0] DRAM_ADDR,
     inout  [15:0] DRAM_DATA,

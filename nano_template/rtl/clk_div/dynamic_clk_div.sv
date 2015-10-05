@@ -1,3 +1,6 @@
+`timescale 10ns / 10ps
+
+
 module dynamic_clk_div #(parameter COUNTER_WIDTH=32) (
     input                     clk,
     input [COUNTER_WIDTH-1:0] div,

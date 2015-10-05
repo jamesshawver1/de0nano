@@ -1,0 +1,9 @@
+../rtl/uC/uart.sv
+../tb/top_level/top_level_tb.sv
+../tb/top_level/Stimulus.sv
+../tb/top_level/ScoreBoard.sv
+../rtl/clk_div/clk_div.sv
+../rtl/clk_div/dynamic_clk_div.sv
+../rtl/de0_board_if.sv
+../rtl/top_level.sv
+../rtl/uC/pwm.sv

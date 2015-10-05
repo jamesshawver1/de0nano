@@ -1,3 +1,6 @@
+`timescale 10ns / 10ps
+
+
 module clk_div #(parameter DIV=50000000,parameter COUNTER_WIDTH=32) (
     input clk,
     input reset,

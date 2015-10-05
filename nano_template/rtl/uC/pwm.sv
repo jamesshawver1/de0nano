@@ -1,3 +1,6 @@
+`timescale 10ns / 10ps
+
+
 module pwm #(parameter DIV_WIDTH=16, parameter PWM_BITS=8)(
     input                 clk,
     input                 reset,
