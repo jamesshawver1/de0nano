@@ -10,7 +10,7 @@ module top_level
     input         CLK50MHZ,//do not rename
     input  [1:0]  KEY,
     input  [3:0]  SWITCH,
-    /*      DRAM SIGNALS    */
+    /*      DRAM SIGNALS    
     output [12:0] DRAM_ADDR,
     output [15:0] DRAM_DATA,
     output [1:0]  DRAM_BANK_ADDR,
@@ -22,13 +22,13 @@ module top_level
         output        DRAM_WR_EN,
         output        DRAM_CS_N,
 
-    /* EEPROM/GSENSOR SIGNALS    */
+    /* EEPROM/GSENSOR SIGNALS  
     output        EEPROM_SCLK,
         input         EEPROM_SDAT,
         input         G_SENSOR_INT,
     output        G_SENSOR_CS,
 
-    /*        ADC SIGNALS        */
+    /*        ADC SIGNALS     
     output        ADC_CS_N, //LOW ACTIVE!
     output        ADC_SADDR,
         input         ADC_SDAT,
@@ -36,6 +36,7 @@ module top_level
 
     /*       GPIO Signals by pin Position  */
     input         JP1_1, //must be input
+    /*     
     output        JP1_2,
     input         JP1_3, //must be input
     output        JP1_4,
@@ -76,7 +77,7 @@ module top_level
         output        JP1_39,
     output        JP1_40,
 
-    /*       GPIO Signals by pin Position  */
+    /*       GPIO Signals by pin Position 
     input         JP2_1, //must be input
     output        JP2_2,
     input         JP2_3, //must be input
@@ -118,7 +119,7 @@ module top_level
         output        JP2_39,
         output        JP2_40,
 
-    /*       GPIO Signals by pin Position  */
+    /*       GPIO Signals by pin Position 
     //input         JP3_1, //VCC 3v3
     input         JP3_2, //must be input
     input         JP3_3, //must be input
@@ -136,6 +137,7 @@ module top_level
         output        JP3_16,
         output        JP3_17,
 
+    */
     output reg [7:0]  LED
 );
 
@@ -143,20 +145,6 @@ reg [7:0]  LED_s;
 wire reset_s;
 wire aHz_s;
 assign reset_s = ~KEY[0];
-
-dram_if dram(
-    .DRAM_ADDR(DRAM_ADDR),
-    .DRAM_DATA(DRAM_DATA),
-    .DRAM_BANK_ADDR(DRAM_BANK_ADDR),
-    .DRAM_DQM(DRAM_DQM), //data byte mask
-    .DRAM_RAS_N(DRAM_RAS_N),
-    .DRAM_CAS_N(DRAM_CAS_N),
-    .DRAM_CLK_EN(DRAM_CLK_EN),
-    .DRAM_CLK(DRAM_CLK),
-    .DRAM_WR_EN(DRAM_WR_EN),
-    .DRAM_CS_N(DRAM_CS_N),
-    .clk(CLK50MHZ)
-);
 
 dynamic_clk_div #(
                     .COUNTER_WIDTH(32)
@@ -210,7 +198,7 @@ rx_uart
     .clk(CLK50MHZ),
     .state_o(state_s),
     .enable('1),
-    .samples_per_bit(434),
+    .samples_per_bit(32'd434),
     .data_width(4'd8),
     .data(data_s),
     .stop_bits(2'b1),
@@ -219,7 +207,7 @@ rx_uart
 );
 
 
-always_ff @(posedge CLK50MHZ or posedge reset_s)  begin
+always_comb begin
     if (reset_s) LED_s <= '0;
     else LED_s <= data_s;
 end

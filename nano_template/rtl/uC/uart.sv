@@ -51,60 +51,54 @@ interface rx_uart_if #(SAMPLE_WIDTH=32)
     //sampling logic
     always_ff @(posedge clk or posedge reset) begin
         if(reset) begin
-            rx_r <='0;
-            rx_r2 <='0;
-            sample_point <= '0;
-            samples_count_r <= '0;
+            rx_r                <='0;
+            rx_r2               <='0;
+            sample_point        <= '0;
+            samples_count_r     <= '0;
         end
         else begin
-            rx_r <= rx_in;
-            rx_r2 <= rx_r;
+            rx_r2 <= rx_r; rx_r <= rx_in;
             if(state == IDLE) begin
-                sample_point <= '0;
-                samples_count_r = {1'b0,samples_per_bit[SAMPLE_WIDTH-1:1]}; //dividing by two
+                sample_point    <= '0;
+                samples_count_r <= {1'b0,samples_per_bit[SAMPLE_WIDTH-1:1]}; //dividing by two
             end
-            else if(rx_in != rx_r) begin //known edge of data
-                samples_count_r = {1'b0,samples_per_bit[SAMPLE_WIDTH-1:1]}; //dividing by two
-                sample_point <= '0;
+            //else if(rx_r2 ^ rx_r && ~(rx_r^rx_in)) begin //known edge of data
+            else if(rx_r2 != rx_r) begin //known edge of data
+                samples_count_r <= {1'b0,samples_per_bit[SAMPLE_WIDTH-1:1]}; //dividing by two
+                sample_point    <= '0;
             end
             else if (~(|samples_count_r)) begin
-                samples_count_r = samples_per_bit[SAMPLE_WIDTH-1:0]; //full count
-                sample_point <= '1;
+                samples_count_r <= samples_per_bit[SAMPLE_WIDTH-1:0]; //full count
+                sample_point    <= '1;
             end
             else begin
                 samples_count_r <= samples_count_r - 1; //count
-                sample_point <= '0;
+                sample_point    <= '0;
             end
         end
     end
 
-    always_latch begin
-        next=next;
-        if (reset) begin
-            next = IDLE;
-        end
+    //next state logic
+    always_comb begin
+        if (reset) next = IDLE;
         else begin
             case (state)
-                IDLE:  begin
-                    if(!rx_in) begin 
-                        next = START;
-                    end
-                end
-                START: begin
-                    if(sample_point) next=DATA;
-                    end
+                IDLE:  if((~rx_r2)&(~rx_r)&(~rx_in)) next = START;
+                       else                          next = IDLE;
+                START: if(sample_point)              next = DATA;
+                       else                          next = START;
                 DATA: begin
-                    if (~(|bit_count)) 
-                        if(parity == NO_PARITY) next = STOP;
-                        else next = PARITY;
+                    if (~(|bit_count)) begin
+                        if(parity == NO_PARITY)      next = STOP;
+                        else                         next = PARITY;
                     end
-                PARITY: begin
-                    if(sample_point) next=STOP;
-                    end
-                STOP: begin
-                    if(~(|bit_count)) next=IDLE;
-                    end
-                default: next=OH_SHIT;//just start over if put into a weird state
+                    else                             next=PARITY;
+                end
+                PARITY:  if(sample_point)            next=STOP;
+                         else                        next=PARITY;
+                STOP:    if(~(|bit_count))           next=IDLE;
+                         else                        next=STOP;
+                default: ;
             endcase
         end
     end
@@ -120,48 +114,46 @@ interface rx_uart_if #(SAMPLE_WIDTH=32)
     end
 
     //registers
-    always_ff @(posedge clk  or posedge reset) begin
-        data <= data;
-        data_r <= data_r;
-        if (reset) begin
-            bit_count <= '0;
-            data <= '1;
-        end
-        else begin
-            case (state)
-                START: begin 
-                    bit_count <= data_width;
-                    data_r <='0;
-                end
-                DATA: begin
-                    if(next == STOP) bit_count <= stop_bits;
-                    else if(sample_point) begin
-                        if(~(|bit_count)) begin
-                            bit_count <= '0;
-                        end
-                        else begin
-                            bit_count <= bit_count -1;
-                            data_r<={data_r[6:0],rx_r2}; //shifting the data along
-                        end
+    always_ff @(posedge clk) begin
+        case (state)
+            START: bit_count <= data_width;
+            DATA: begin
+                if(next == STOP) bit_count <= stop_bits;
+                else if(sample_point) begin
+                    if((|bit_count)) begin
+                        bit_count <= bit_count -1;
+                        data_r<={data_r[6:0],rx_in}; //shifting the data along
+                    end
+                    else begin
+                        bit_count <= bit_count;
+                        data_r<=data_r; //shifting the data along
                     end
                 end
-                PARITY: begin
-                    if(next == STOP) bit_count <= stop_bits;
+                else begin
+                    bit_count <= bit_count;
+                    data_r<=data_r; //shifting the data along
                 end
-                STOP: begin
-                    if(sample_point) begin
-                        if(~(|bit_count)) begin
-                            bit_count <= '0;
-                        end
-                        else begin
-                            if(bit_count==1) data<=data_r;
-                            bit_count <= bit_count -1;
-                        end
+            end
+            PARITY: bit_count <= stop_bits;
+            STOP: begin
+                data<=data_r;
+                if(sample_point) begin
+                    if((|bit_count)) begin
+                        bit_count <= bit_count -1;
+                    end
+                    else begin
+                        bit_count <= bit_count;
+                        data_r<=data_r; //shifting the data along
                     end
                 end
-                default: ;
-            endcase
-        end
+                else begin
+                    bit_count <= bit_count;
+                    data_r<=data_r; //shifting the data along
+                end
+            end
+            OH_SHIT: data <= 8'haa;
+            default: ;
+        endcase
     end
 endinterface
 
