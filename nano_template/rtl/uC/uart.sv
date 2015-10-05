@@ -92,7 +92,7 @@ interface rx_uart_if #(SAMPLE_WIDTH=32)
                         if(parity == NO_PARITY)      next = STOP;
                         else                         next = PARITY;
                     end
-                    else                             next=PARITY;
+                    else                             next=DATA;
                 end
                 PARITY:  if(sample_point)            next=STOP;
                          else                        next=PARITY;
@@ -122,7 +122,7 @@ interface rx_uart_if #(SAMPLE_WIDTH=32)
                 else if(sample_point) begin
                     if((|bit_count)) begin
                         bit_count <= bit_count -1;
-                        data_r<={data_r[6:0],rx_in}; //shifting the data along
+                        data_r<={rx_r2,data_r[7:1]}; //shifting the data along LSB comes in first
                     end
                     else begin
                         bit_count <= bit_count;
