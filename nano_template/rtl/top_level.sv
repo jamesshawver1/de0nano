@@ -167,7 +167,7 @@ generate
                 .reset(reset_s),
                 .enable(LED_s[c]),
                 .div(8'd100),
-                .compare(8'd25),
+                .compare(8'hff),
                 .pwm_o(LED[c])
             );
         else
@@ -180,7 +180,7 @@ generate
                 .reset(reset_s),
                 .enable(LED_s[c]),
                 .div(8'd100),
-                .compare('1),
+                .compare(8'hff),
                 .pwm_o(LED[c])
             );
     end
@@ -188,13 +188,14 @@ endgenerate
 
 wire [3:0] state_s;
 wire [7:0] data_s;
+wire rx_valid_s;
 
-rx_uart_if #(.SAMPLE_WIDTH(32))
+uart_rx #(.SAMPLE_WIDTH(32))
 rx_uart 
 (
     .reset(reset_s),
     .clk(CLK50MHZ),
-    .state_o(state_s),
+    .write(rx_valid_s),
     .enable('1),
     .samples_per_bit(32'd434),
     .data_width(4'd8),
@@ -204,6 +205,20 @@ rx_uart
     .rx_in(JP1_1)
 );
 
+uart_tx #(.SAMPLE_WIDTH(32))
+tx_uart 
+(
+    .empty(1'b0),
+    .reset(reset_s),
+    .clk(CLK50MHZ),
+    .enable('1),
+    .samples_per_bit(32'd434),
+    .data_width(4'd8),
+    .data(8'h41),
+    .stop_bits(2'b1),
+    .parity(NO_PARITY),
+    .tx_out(JP1_2)
+);
 
 always_comb begin
     if (reset_s) LED_s <= '0;

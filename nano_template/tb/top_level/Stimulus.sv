@@ -50,9 +50,18 @@ initial begin
     #868 JP1_1_o='0; //data 7
     #868 JP1_1_o='1; //stop bit
     #868 JP1_1_o='1; //stop bit
-
-
     #100;
+    JP1_1_o='0; //start of UART
+    #868 JP1_1_o='0; //data 0
+    #868 JP1_1_o='0; //data 1
+    #868 JP1_1_o='0; //data 2
+    #868 JP1_1_o='0; //data 3
+    #868 JP1_1_o='1; //data 4
+    #868 JP1_1_o='1; //data 5
+    #868 JP1_1_o='1; //data 6
+    #868 JP1_1_o='1; //data 7
+    #868 JP1_1_o='1; //stop bit
+    #868 JP1_1_o='1; //stop bit
     $finish;
 end
 

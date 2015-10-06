@@ -1,4 +1,6 @@
-../rtl/uC/uart.sv
+../rtl/uC/uart_pkg.sv
+../rtl/uC/uart_rx.sv
+../rtl/uC/uart_tx.sv
 ../tb/top_level/top_level_tb.sv
 ../tb/top_level/Stimulus.sv
 ../tb/top_level/ScoreBoard.sv

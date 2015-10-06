@@ -1,34 +1,20 @@
 `timescale 10ns / 10ps
 
-
-
-`ifndef uart_pkg
-`define uart_pkg
-
-package uart_pkg;
-    typedef enum logic [1:0] {
-        NO_PARITY,
-        ODD_PARITY,
-        EVEN_PARITY
-    } parity_t;
-endpackage
-
 import uart_pkg::*;
 
-interface rx_uart_if #(SAMPLE_WIDTH=32)
+module uart_rx #(SAMPLE_WIDTH=32)
 (
     input            reset,
     input            clk,
-    output [3:0]     state_o,
     input  [3:0]     data_width,
     input  [1:0]     stop_bits,
     input            enable,
     input parity_t   parity,
     output reg [7:0] data,
+    output logic     write,
     input   [SAMPLE_WIDTH-1:0] samples_per_bit,
     input            rx_in
 );
-    logic read;
     reg     [SAMPLE_WIDTH-1:0] samples_count_r;
     logic            empty;
     reg [3:0]        bit_count;
@@ -62,8 +48,8 @@ interface rx_uart_if #(SAMPLE_WIDTH=32)
                 sample_point    <= '0;
                 samples_count_r <= {1'b0,samples_per_bit[SAMPLE_WIDTH-1:1]}; //dividing by two
             end
-            //else if(rx_r2 ^ rx_r && ~(rx_r^rx_in)) begin //known edge of data
-            else if(rx_r2 != rx_r) begin //known edge of data
+            else if(rx_r2 ^ rx_r && ~(rx_r^rx_in)) begin //known edge of data
+            //else if(rx_r2 != rx_r) begin //known edge of data
                 samples_count_r <= {1'b0,samples_per_bit[SAMPLE_WIDTH-1:1]}; //dividing by two
                 sample_point    <= '0;
             end
@@ -98,7 +84,7 @@ interface rx_uart_if #(SAMPLE_WIDTH=32)
                          else                        next=PARITY;
                 STOP:    if(~(|bit_count))           next=IDLE;
                          else                        next=STOP;
-                default: ;
+                default: next=OH_SHIT;
             endcase
         end
     end
@@ -116,6 +102,7 @@ interface rx_uart_if #(SAMPLE_WIDTH=32)
     //registers
     always_ff @(posedge clk) begin
         case (state)
+            IDLE: write<=1'b0;
             START: bit_count <= data_width;
             DATA: begin
                 if(next == STOP) bit_count <= stop_bits;
@@ -136,14 +123,18 @@ interface rx_uart_if #(SAMPLE_WIDTH=32)
             end
             PARITY: bit_count <= stop_bits;
             STOP: begin
-                data<=data_r;
                 if(sample_point) begin
                     if((|bit_count)) begin
                         bit_count <= bit_count -1;
+                        if(bit_count <= 1) begin
+                            data<=data_r;
+                            write<=1'b1;
+                        end
                     end
                     else begin
                         bit_count <= bit_count;
                         data_r<=data_r; //shifting the data along
+                        write<=1'b1;
                     end
                 end
                 else begin
@@ -155,8 +146,7 @@ interface rx_uart_if #(SAMPLE_WIDTH=32)
             default: ;
         endcase
     end
-endinterface
+endmodule
 
 
 
-`endif
