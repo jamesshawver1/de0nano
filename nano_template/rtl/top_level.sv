@@ -208,13 +208,13 @@ rx_uart
 uart_tx #(.SAMPLE_WIDTH(32))
 tx_uart 
 (
-    .empty(1'b0),
+    .empty(~rx_valid_s),
     .reset(reset_s),
     .clk(CLK50MHZ),
     .enable('1),
     .samples_per_bit(32'd434),
     .data_width(4'd8),
-    .data(8'h41),
+    .data(data_s),
     .stop_bits(2'b1),
     .parity(NO_PARITY),
     .tx_out(JP1_2)
